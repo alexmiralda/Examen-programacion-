@@ -1,15 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package examen_progra2;
 
-/**
- *
- * @author JORGE GUTIERREZ
- */
-public class Editor extends javax.swing.JFrame {
 
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+
+
+public class Editor extends javax.swing.JFrame {
+    
+    JFileChooser fc;
+    File archivo;
+    
+    
     /**
      * Creates new form Editor
      */
@@ -62,6 +66,11 @@ public class Editor extends javax.swing.JFrame {
         jMenu1.setText("Archivo");
 
         AbrirMenu.setText("Abrir");
+        AbrirMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AbrirMenuActionPerformed(evt);
+            }
+        });
         jMenu1.add(AbrirMenu);
 
         NuevoMenu.setText("Nuevo");
@@ -71,6 +80,11 @@ public class Editor extends javax.swing.JFrame {
         jMenu1.add(GuardarMenu);
 
         ExitMenu.setText("Salir");
+        ExitMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitMenuActionPerformed(evt);
+            }
+        });
         jMenu1.add(ExitMenu);
 
         jMenuBar1.add(jMenu1);
@@ -90,6 +104,40 @@ public class Editor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void AbrirMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirMenuActionPerformed
+    
+         fc = new JFileChooser();
+        int ventana = fc.showOpenDialog(this);
+
+        if (ventana == JFileChooser.APPROVE_OPTION) {
+
+            archivo = fc.getSelectedFile();
+
+            try {
+
+                AreaTexto.setText(null);
+                BufferedReader leer = new BufferedReader(new FileReader(archivo));
+                String cadena;
+
+                while ((cadena = leer.readLine()) != null) {
+                    AreaTexto.append(cadena + "\n");
+                }
+
+            } catch (FileNotFoundException e) {
+
+            } catch (IOException ex) {
+                Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } 
+        
+        
+    }//GEN-LAST:event_AbrirMenuActionPerformed
+
+    private void ExitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_ExitMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,10 +167,8 @@ public class Editor extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Editor().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Editor().setVisible(true);
         });
     }
 
