@@ -1,24 +1,21 @@
-
 package examen_progra2;
-
 
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-
 public class Editor extends javax.swing.JFrame {
-    
+
     JFileChooser fc;
     File archivo;
-    
-    
+
     /**
      * Creates new form Editor
      */
     public Editor() {
         initComponents();
+        archivo = null;
     }
 
     /**
@@ -77,6 +74,11 @@ public class Editor extends javax.swing.JFrame {
         jMenu1.add(NuevoMenu);
 
         GuardarMenu.setText("Guardar ");
+        GuardarMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarMenuActionPerformed(evt);
+            }
+        });
         jMenu1.add(GuardarMenu);
 
         ExitMenu.setText("Salir");
@@ -106,8 +108,8 @@ public class Editor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AbrirMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirMenuActionPerformed
-    
-         fc = new JFileChooser();
+
+        fc = new JFileChooser();
         int ventana = fc.showOpenDialog(this);
 
         if (ventana == JFileChooser.APPROVE_OPTION) {
@@ -130,14 +132,35 @@ public class Editor extends javax.swing.JFrame {
                 Logger.getLogger(Editor.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } 
-        
-        
+        }
+
+
     }//GEN-LAST:event_AbrirMenuActionPerformed
 
     private void ExitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuActionPerformed
         System.exit(0);
     }//GEN-LAST:event_ExitMenuActionPerformed
+
+    private void GuardarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarMenuActionPerformed
+
+        String escribir = AreaTexto.getText();
+        PrintWriter cl;
+
+        if (archivo != null) {
+
+            try {
+
+                cl = new PrintWriter(archivo);
+                cl.print(escribir);
+                cl.close();
+
+            } catch (FileNotFoundException e) {
+            }
+
+        }
+
+
+    }//GEN-LAST:event_GuardarMenuActionPerformed
 
     /**
      * @param args the command line arguments
