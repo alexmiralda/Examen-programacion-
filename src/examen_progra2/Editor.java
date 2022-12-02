@@ -32,6 +32,7 @@ public class Editor extends javax.swing.JFrame {
         AreaTexto = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         AbrirMenu = new javax.swing.JMenuItem();
         NuevoMenu = new javax.swing.JMenuItem();
         GuardarMenu = new javax.swing.JMenuItem();
@@ -47,20 +48,15 @@ public class Editor extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Archivo");
+        jMenu1.add(jSeparator1);
 
         AbrirMenu.setText("Abrir");
         AbrirMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +67,11 @@ public class Editor extends javax.swing.JFrame {
         jMenu1.add(AbrirMenu);
 
         NuevoMenu.setText("Nuevo");
+        NuevoMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NuevoMenuActionPerformed(evt);
+            }
+        });
         jMenu1.add(NuevoMenu);
 
         GuardarMenu.setText("Guardar ");
@@ -97,11 +98,11 @@ public class Editor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -143,6 +144,11 @@ public class Editor extends javax.swing.JFrame {
 
     private void GuardarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarMenuActionPerformed
 
+        String Nombre = JOptionPane.showInputDialog("Ingrese el nombre del archivo");
+        String carpeta = System.getProperty("user.dir");
+        String dirT = carpeta + "/" + Nombre + ".txt";
+        FileWriter ubi = null;
+
         String escribir = AreaTexto.getText();
         PrintWriter cl;
 
@@ -157,10 +163,48 @@ public class Editor extends javax.swing.JFrame {
             } catch (FileNotFoundException e) {
             }
 
+        } 
+        
+        if (archivo == null){
+
+            try {
+
+                ubi = new FileWriter(dirT);
+
+            } catch (IOException e) {
+            }
+
+            try {
+                BufferedWriter esc = new BufferedWriter(ubi);
+                esc.write(AreaTexto.getText());
+                esc.close();
+
+                JOptionPane.showMessageDialog(rootPane, "Archivo " + Nombre +".txt guardado");
+
+            } catch (IOException e) {
+            }
+
         }
 
 
     }//GEN-LAST:event_GuardarMenuActionPerformed
+
+    private void NuevoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoMenuActionPerformed
+
+        String Nombre = JOptionPane.showInputDialog("Ingrese el nombre del archivo");
+        String carpeta = System.getProperty("user.dir");
+        String dirT = carpeta + "/" + Nombre + ".txt";
+        FileWriter ubi = null;
+
+        try {
+
+            ubi = new FileWriter(dirT);
+            JOptionPane.showMessageDialog(rootPane, "Archivo " + Nombre + ".txt creado");
+        } catch (IOException e) {
+        }
+
+
+    }//GEN-LAST:event_NuevoMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,5 +249,6 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
