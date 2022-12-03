@@ -148,7 +148,7 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_AbrirMenuActionPerformed
 
     private void ExitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_ExitMenuActionPerformed
 
     private void GuardarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarMenuActionPerformed
@@ -187,7 +187,9 @@ public class Editor extends javax.swing.JFrame {
                 esc.write(AreaTexto.getText());
                 esc.close();
 
-                JOptionPane.showMessageDialog(rootPane, "Archivo " + Nombre + ".txt guardado");
+                JOptionPane.showMessageDialog(rootPane, "Archivo " + Nombre + ".txt guardado" );
+                
+                JOptionPane.showMessageDialog(rootPane, "En la ruta" + dirT );
 
             } catch (IOException e) {
             }
