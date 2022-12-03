@@ -36,6 +36,7 @@ public class Editor extends javax.swing.JFrame {
         AbrirMenu = new javax.swing.JMenuItem();
         NuevoMenu = new javax.swing.JMenuItem();
         GuardarMenu = new javax.swing.JMenuItem();
+        ComoGuardar = new javax.swing.JMenuItem();
         ExitMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,6 +82,14 @@ public class Editor extends javax.swing.JFrame {
             }
         });
         jMenu1.add(GuardarMenu);
+
+        ComoGuardar.setText("Guardar como");
+        ComoGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComoGuardarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ComoGuardar);
 
         ExitMenu.setText("Salir");
         ExitMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -144,11 +153,6 @@ public class Editor extends javax.swing.JFrame {
 
     private void GuardarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarMenuActionPerformed
 
-        String Nombre = JOptionPane.showInputDialog("Ingrese el nombre del archivo");
-        String carpeta = System.getProperty("user.dir");
-        String dirT = carpeta + "/" + Nombre + ".txt";
-        FileWriter ubi = null;
-
         String escribir = AreaTexto.getText();
         PrintWriter cl;
 
@@ -163,9 +167,13 @@ public class Editor extends javax.swing.JFrame {
             } catch (FileNotFoundException e) {
             }
 
-        } 
-        
-        if (archivo == null){
+            JOptionPane.showMessageDialog(rootPane, "Guardado");
+
+        } else {
+            String Nombre = JOptionPane.showInputDialog("Ingrese el nombre del archivo");
+            String carpeta = System.getProperty("user.dir");
+            String dirT = carpeta + "/" + Nombre + ".txt";
+            FileWriter ubi = null;
 
             try {
 
@@ -179,19 +187,22 @@ public class Editor extends javax.swing.JFrame {
                 esc.write(AreaTexto.getText());
                 esc.close();
 
-                JOptionPane.showMessageDialog(rootPane, "Archivo " + Nombre +".txt guardado");
+                JOptionPane.showMessageDialog(rootPane, "Archivo " + Nombre + ".txt guardado");
 
             } catch (IOException e) {
             }
 
         }
 
-
     }//GEN-LAST:event_GuardarMenuActionPerformed
 
     private void NuevoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoMenuActionPerformed
 
         String Nombre = JOptionPane.showInputDialog("Ingrese el nombre del archivo");
+
+        Editor vent = new Editor();
+        vent.setVisible(true);
+
         String carpeta = System.getProperty("user.dir");
         String dirT = carpeta + "/" + Nombre + ".txt";
         FileWriter ubi = null;
@@ -205,6 +216,31 @@ public class Editor extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_NuevoMenuActionPerformed
+
+    private void ComoGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComoGuardarActionPerformed
+
+        String Nombre = JOptionPane.showInputDialog("Ingrese el nombre del archivo");
+        String carpeta = System.getProperty("user.dir");
+        String dirT = carpeta + "/" + Nombre + ".txt";
+        FileWriter ubi = null;
+
+        try {
+
+            ubi = new FileWriter(dirT);
+
+        } catch (IOException e) {
+        }
+
+        try {
+            BufferedWriter esc = new BufferedWriter(ubi);
+            esc.write(AreaTexto.getText());
+            esc.close();
+
+            JOptionPane.showMessageDialog(rootPane, "Archivo " + Nombre + ".txt guardado");
+
+        } catch (IOException e) {
+        }
+    }//GEN-LAST:event_ComoGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,6 +278,7 @@ public class Editor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AbrirMenu;
     private javax.swing.JTextArea AreaTexto;
+    private javax.swing.JMenuItem ComoGuardar;
     private javax.swing.JMenuItem ExitMenu;
     private javax.swing.JMenuItem GuardarMenu;
     private javax.swing.JMenuItem NuevoMenu;
